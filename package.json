@@ -1,0 +1,24 @@
+{
+    "author": "Brandon Scott brandongregoryscott[at]gmail[dot]com (https://github.com/brandongregoryscott)",
+    "bin": {
+        "b-cli": "b-cli.js"
+    },
+    "dependencies": {
+        "and-cli": "1.3.1",
+        "commander": "6.0.0",
+        "shelljs": "0.8.4"
+    },
+    "description": "Custom CLI for holding utility commands written with shelljs and commanderjs, extending the and-cli",
+    "devDependencies": {
+        "prettier": "1.19.1"
+    },
+    "license": "Apache-2.0",
+    "name": "b-cli",
+    "private": true,
+    "scripts": {
+        "configure:git": "echo Ensuring git hooksPath is set to .githooks directory; git config core.hooksPath .githooks; chmod +x .githooks/*",
+        "preinstall": "npm run configure:git",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "version": "0.0.1"
+}
