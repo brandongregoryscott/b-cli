@@ -2,8 +2,10 @@
 // #region Imports
 // -----------------------------------------------------------------------------------------
 
-const { NODE_MODULES } = require("and-cli/modules/constants");
-const { StringUtils } = require("andculturecode-javascript-core");
+const {
+    StringUtils,
+    CollectionUtils,
+} = require("andculturecode-javascript-core");
 const echo = require("and-cli/modules/echo");
 const optionStringFactory = require("and-cli/utilities/option-string-factory");
 const shell = require("shelljs");
@@ -14,26 +16,18 @@ const shell = require("shelljs");
 // #region Functions
 // -----------------------------------------------------------------------------------------
 
-const jsonList = {
+const jsonAlphabetize = {
     description() {
-        return `Lists json files in the specified directory (defaults to pwd - ${shell.pwd()})`;
+        return "Alphabetizes a json file by a certain key";
     },
     getOptions() {
-        return optionStringFactory.build("list [dir]", "l");
+        return optionStringFactory.build("alphabetize [files]", "a");
     },
-    run(dir) {
-        if (StringUtils.isEmpty(dir)) {
-            dir = shell.pwd();
+    run(files) {
+        if (CollectionUtils.isEmpty(files)) {
+            echo.error("No file specified.");
+            shell.exit(0);
         }
-
-        echo.message(`Listing json files in ${dir}`);
-
-        const jsonFiles = shell
-            .ls("-R", dir)
-            .filter((file) => !file.includes(NODE_MODULES))
-            .filter((file) => file.endsWith(".json"));
-
-        jsonFiles.forEach((jsonFile) => console.log(jsonFile));
     },
 };
 
@@ -43,6 +37,6 @@ const jsonList = {
 // #region Exports
 // -----------------------------------------------------------------------------------------
 
-module.exports = jsonList;
+module.exports = jsonAlphabetize;
 
 // #endregion Exports

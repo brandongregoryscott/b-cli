@@ -4,6 +4,7 @@ const {
     StringUtils,
     CollectionUtils,
 } = require("andculturecode-javascript-core");
+const jsonAlphabetize = require("./modules/json-alphabetize");
 
 require("and-cli/command-runner").run(async () => {
     // -----------------------------------------------------------------------------------------
@@ -29,8 +30,17 @@ require("and-cli/command-runner").run(async () => {
     program
         .usage("option(s)")
         .description("Commands for listing, processing, etc. json files")
+        .option(jsonAlphabetize.getOptions(), jsonAlphabetize.description())
         .option(jsonList.getOptions(), jsonList.description())
         .parse(process.argv);
+
+    if (program.alphabetize) {
+        const files =
+            typeof program.alphabetize === "string"
+                ? program.alphabetize.split(" ")
+                : undefined;
+        jsonAlphabetize.run(files);
+    }
 
     if (program.list) {
         const dir = typeof program.list === "string" ? program.list : undefined;
