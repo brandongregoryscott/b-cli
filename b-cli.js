@@ -20,6 +20,10 @@ program.description(description);
 // Register all of the base commands from the and-cli with this application
 commandRegistry
     .registerBaseCommands()
+    .registerCommand({
+        command: "json",
+        description: "Commands to manipulate json files",
+    })
     .registerAliasesFromConfig()
     .parseWithAliases();
 
