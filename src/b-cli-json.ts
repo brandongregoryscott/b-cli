@@ -1,27 +1,15 @@
 #!/usr/bin/env node
 
-const {
-    StringUtils,
-    CollectionUtils,
-} = require("andculturecode-javascript-core");
-const jsonAlphabetize = require("./modules/json-alphabetize");
-
 require("and-cli/command-runner").run(async () => {
     // -----------------------------------------------------------------------------------------
     // #region Imports
     // -----------------------------------------------------------------------------------------
 
+    const jsonAlphabetize = require("./modules/json-alphabetize");
     const jsonList = require("./modules/json-list");
-    const optionStringFactory = require("and-cli/utilities/option-string-factory");
     const program = require("and-cli");
 
     // #endregion Imports
-
-    // -----------------------------------------------------------------------------------------
-    // #region Functions
-    // -----------------------------------------------------------------------------------------
-
-    // #endregion Functions
 
     // -----------------------------------------------------------------------------------------
     // #region Entrypoint
@@ -33,7 +21,7 @@ require("and-cli/command-runner").run(async () => {
         .option(jsonAlphabetize.getOptions(), jsonAlphabetize.description())
         .option(
             jsonAlphabetize.getKeyOptions(),
-            "Specify a key whose value should be used for alphabetization"
+            jsonAlphabetize.keyDescription()
         )
         .option(jsonList.getOptions(), jsonList.description())
         .parse(process.argv);
