@@ -46,6 +46,7 @@ const jsonAlphabetize = {
             echo.error("No file(s) specified.");
             shell.exit(0);
         }
+        const timestamp = new Date().toISOString();
 
         files.forEach((file) => {
             const parsedFile = jsonfile.readFileSync(file);
@@ -54,7 +55,7 @@ const jsonAlphabetize = {
                 : _sortObjectByKeys(parsedFile);
 
             jsonfile.writeFileSync(
-                `${file.replace(".json", "")}.alphabetized.json`,
+                `${file.replace(".json", "")}.${timestamp}.json`,
                 alphabetizedFile
             );
         });
