@@ -74,7 +74,9 @@ const JsonAlphabetize = {
             echo.success(
                 `Finished alphabetizing '${inputFilename}', writing file to '${outputFilename}' ...`
             );
-            jsonfile.writeFileSync(outputFilename, alphabetizedFile);
+            jsonfile.writeFileSync(outputFilename, alphabetizedFile, {
+                spaces: 4,
+            });
         });
     },
     setInplace(inplace?: boolean) {
