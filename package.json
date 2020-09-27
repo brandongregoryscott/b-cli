@@ -24,10 +24,10 @@
     "scripts": {
         "build": "tsc --pretty && chmod +x dist/*",
         "clean": "rimraf dist && rimraf coverage",
-        "configure:git": "echo Ensuring git hooksPath is set to .githooks directory; git config core.hooksPath .githooks; chmod +x .githooks/*",
+        "configure:git": "echo Ensuring git hooksPath is set to .githooks directory && git config core.hooksPath .githooks && chmod +x .githooks/*",
         "format": "prettier --write \"src/**/*.ts\" --trailing-comma es5",
         "prebuild": "npm run clean && npm run format && echo Using TypeScript && tsc --version",
-        "preinstall": "npm run configure:git",
+        "prepublishOnly": "npm run build",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "tsc --watch"
     },
