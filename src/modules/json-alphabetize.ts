@@ -5,7 +5,7 @@
 import { CollectionUtils, StringUtils } from "andculturecode-javascript-core";
 import echo from "and-cli/modules/echo";
 import jsonfile from "jsonfile";
-import optionStringFactory from "and-cli/utilities/command-string-factory";
+import optionStringFactory from "and-cli/utilities/option-string-factory";
 import shell from "shelljs";
 
 // #endregion Imports
@@ -13,6 +13,11 @@ import shell from "shelljs";
 // -----------------------------------------------------------------------------------------
 // #region Variables
 // -----------------------------------------------------------------------------------------
+
+/**
+ * If set, the file will be modified in place instead of creating a new file with a timestamp.
+ */
+let _inplace: boolean | undefined;
 
 /**
  * If set, the value of this key will be used to determine sorting order of the underlying object.
@@ -32,8 +37,14 @@ const JsonAlphabetize = {
     getOptions() {
         return optionStringFactory.build("alphabetize [files]", "a");
     },
+    getInplaceOptions() {
+        return optionStringFactory.build("in-place", "i");
+    },
     getKeyOptions() {
         return optionStringFactory.build("key <key>", "k");
+    },
+    inplaceDescription() {
+        return "Modify the file in-place instead of creating a new file with a timestamp.";
     },
     keyDescription() {
         return "Specify a key whose value should be used for alphabetization";
@@ -45,17 +56,34 @@ const JsonAlphabetize = {
         }
         const timestamp = new Date().toISOString();
 
-        files?.forEach((file) => {
-            const parsedFile = jsonfile.readFileSync(file);
+        files?.forEach((inputFilename) => {
+            let outputFilename = `${inputFilename.replace(
+                ".json",
+                ""
+            )}.${timestamp}.json`;
+            if (_inplace != null && _inplace) {
+                echo.message(`Modifying file ${inputFilename} in-place.`);
+                outputFilename = inputFilename;
+            }
+
+            const parsedFile = jsonfile.readFileSync(inputFilename);
             const alphabetizedFile = Array.isArray(parsedFile)
                 ? _sortArray(parsedFile)
                 : _sortObjectByKeys(parsedFile);
 
-            jsonfile.writeFileSync(
-                `${file.replace(".json", "")}.${timestamp}.json`,
-                alphabetizedFile
+            echo.success(
+                `Finished alphabetizing '${inputFilename}', writing file to '${outputFilename}' ...`
             );
+            jsonfile.writeFileSync(outputFilename, alphabetizedFile);
         });
+    },
+    setInplace(inplace?: boolean) {
+        if (inplace == null) {
+            return this;
+        }
+
+        _inplace = inplace;
+        return this;
     },
     setKey(key?: string) {
         if (StringUtils.isEmpty(key)) {
