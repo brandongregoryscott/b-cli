@@ -2,11 +2,11 @@
 // #region Imports
 // -----------------------------------------------------------------------------------------
 
-const child_process = require("child_process");
-const commandStringFactory = require("and-cli/utilities/command-string-factory");
-const echo = require("and-cli/modules/echo");
-const optionStringFactory = require("and-cli/utilities/option-string-factory");
-const shell = require("shelljs");
+import child_process from "child_process";
+import commandStringFactory from "and-cli/utilities/command-string-factory";
+import echo from "and-cli/modules/echo";
+import optionStringFactory from "and-cli/utilities/option-string-factory";
+import shell from "shelljs";
 
 // #endregion Imports
 
@@ -14,7 +14,7 @@ const shell = require("shelljs");
 // #region Functions
 // -----------------------------------------------------------------------------------------
 
-const dotnetVersion = {
+const DotnetVersion = {
     cmd() {
         return commandStringFactory.build("dotnet", "--info");
     },
@@ -50,6 +50,6 @@ const dotnetVersion = {
 // #region Exports
 // -----------------------------------------------------------------------------------------
 
-module.exports = dotnetVersion;
+export { DotnetVersion };
 
 // #endregion Exports

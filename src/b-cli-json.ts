@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
+// -----------------------------------------------------------------------------------------
+// #region Imports
+// -----------------------------------------------------------------------------------------
+
+import { JsonAlphabetize } from "./modules/json-alphabetize";
+import { JsonList } from "./modules/json-list";
+import program from "and-cli";
+
+// #endregion Imports
+
 require("and-cli/command-runner").run(async () => {
-    // -----------------------------------------------------------------------------------------
-    // #region Imports
-    // -----------------------------------------------------------------------------------------
-
-    const jsonAlphabetize = require("./modules/json-alphabetize");
-    const jsonList = require("./modules/json-list");
-    const program = require("and-cli");
-
-    // #endregion Imports
-
     // -----------------------------------------------------------------------------------------
     // #region Entrypoint
     // -----------------------------------------------------------------------------------------
@@ -18,12 +18,15 @@ require("and-cli/command-runner").run(async () => {
     program
         .usage("option(s)")
         .description("Commands for listing, processing, etc. json files")
-        .option(jsonAlphabetize.getOptions(), jsonAlphabetize.description())
         .option(
-            jsonAlphabetize.getKeyOptions(),
-            jsonAlphabetize.keyDescription()
+            JsonAlphabetize.getOptions().toString(),
+            JsonAlphabetize.description()
         )
-        .option(jsonList.getOptions(), jsonList.description())
+        .option(
+            JsonAlphabetize.getKeyOptions().toString(), // Typing for CommandString must be off - shouldn't have to do this
+            JsonAlphabetize.keyDescription()
+        )
+        .option(JsonList.getOptions().toString(), JsonList.description())
         .parse(process.argv);
 
     if (program.alphabetize) {
@@ -31,12 +34,12 @@ require("and-cli/command-runner").run(async () => {
             typeof program.alphabetize === "string"
                 ? program.alphabetize.split(" ")
                 : undefined;
-        jsonAlphabetize.setKey(program.key).run(files);
+        JsonAlphabetize.setKey(program.key).run(files);
     }
 
     if (program.list) {
         const dir = typeof program.list === "string" ? program.list : undefined;
-        jsonList.run(dir);
+        JsonList.run(dir);
     }
 
     // If no options are passed in, just output help

@@ -4,9 +4,9 @@
 // #region Imports
 // -----------------------------------------------------------------------------------------
 
-const commandRegistry = require("and-cli/modules/command-registry");
-const packageConfig = require("and-cli/modules/package-config");
-const program = require("and-cli");
+import commandRegistry from "and-cli/modules/command-registry";
+import packageConfig from "and-cli/modules/package-config";
+import program from "and-cli";
 
 // #endregion Imports
 

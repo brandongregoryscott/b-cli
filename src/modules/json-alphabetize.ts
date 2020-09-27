@@ -2,14 +2,11 @@
 // #region Imports
 // -----------------------------------------------------------------------------------------
 
-const {
-    CollectionUtils,
-    StringUtils,
-} = require("andculturecode-javascript-core");
-const echo = require("and-cli/modules/echo");
-const jsonfile = require("jsonfile");
-const optionStringFactory = require("and-cli/utilities/option-string-factory");
-const shell = require("shelljs");
+import { CollectionUtils, StringUtils } from "andculturecode-javascript-core";
+import echo from "and-cli/modules/echo";
+import jsonfile from "jsonfile";
+import optionStringFactory from "and-cli/utilities/command-string-factory";
+import shell from "shelljs";
 
 // #endregion Imports
 
@@ -28,7 +25,7 @@ let _key;
 // #region Public Functions
 // -----------------------------------------------------------------------------------------
 
-const jsonAlphabetize = {
+const JsonAlphabetize = {
     description() {
         return "Alphabetizes a json file by a certain key";
     },
@@ -152,6 +149,6 @@ const _sortObjectByKeys = (unsortedObject) => {
 // #region Exports
 // -----------------------------------------------------------------------------------------
 
-module.exports = jsonAlphabetize;
+export { JsonAlphabetize };
 
 // #endregion Exports

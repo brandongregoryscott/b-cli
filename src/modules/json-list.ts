@@ -2,11 +2,11 @@
 // #region Imports
 // -----------------------------------------------------------------------------------------
 
-const { NODE_MODULES } = require("and-cli/modules/constants");
-const { StringUtils } = require("andculturecode-javascript-core");
-const echo = require("and-cli/modules/echo");
-const optionStringFactory = require("and-cli/utilities/option-string-factory");
-const shell = require("shelljs");
+import { NODE_MODULES } from "and-cli/modules/constants";
+import { StringUtils } from "andculturecode-javascript-core";
+import echo from "and-cli/modules/echo";
+import optionStringFactory from "and-cli/utilities/option-string-factory";
+import shell from "shelljs";
 
 // #endregion Imports
 
@@ -14,7 +14,7 @@ const shell = require("shelljs");
 // #region Functions
 // -----------------------------------------------------------------------------------------
 
-const jsonList = {
+const JsonList = {
     description() {
         return `Lists json files in the specified directory (defaults to pwd - ${shell.pwd()})`;
     },
@@ -43,6 +43,6 @@ const jsonList = {
 // #region Exports
 // -----------------------------------------------------------------------------------------
 
-module.exports = jsonList;
+export { JsonList };
 
 // #endregion Exports
