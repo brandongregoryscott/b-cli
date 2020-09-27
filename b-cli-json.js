@@ -31,6 +31,10 @@ require("and-cli/command-runner").run(async () => {
         .usage("option(s)")
         .description("Commands for listing, processing, etc. json files")
         .option(jsonAlphabetize.getOptions(), jsonAlphabetize.description())
+        .option(
+            jsonAlphabetize.getKeyOptions(),
+            "Specify a key whose value should be used for alphabetization"
+        )
         .option(jsonList.getOptions(), jsonList.description())
         .parse(process.argv);
 
@@ -39,7 +43,7 @@ require("and-cli/command-runner").run(async () => {
             typeof program.alphabetize === "string"
                 ? program.alphabetize.split(" ")
                 : undefined;
-        jsonAlphabetize.run(files);
+        jsonAlphabetize.setKey(program.key).run(files);
     }
 
     if (program.list) {
