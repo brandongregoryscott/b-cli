@@ -123,15 +123,24 @@ const _sortObjectByKeys = (unsortedObject) => {
         return unsortedObject;
     }
 
+    if (Array.isArray(unsortedObject)) {
+        return _sortArray(unsortedObject);
+    }
+
     const sortedObject = {};
     Object.keys(unsortedObject)
         .sort()
         .forEach((key) => {
             let value = unsortedObject[key];
+            if (Array.isArray(value)) {
+                value = _sortArray(value);
+            }
+
             // If the value of the key is another object, recursively sort its keys.
-            if (typeof value === "object") {
+            if (typeof value === "object" && !Array.isArray(value)) {
                 value = _sortObjectByKeys(value);
             }
+
             sortedObject[key] = value;
         });
 
