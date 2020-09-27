@@ -37,7 +37,7 @@ const DotnetVersion = {
             echo.error(
                 "Failed to retrieve dotnet info. See output for details."
             );
-            shell.exit(status);
+            shell.exit(status ?? 1);
         }
 
         return status;

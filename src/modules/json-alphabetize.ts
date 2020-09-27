@@ -17,7 +17,7 @@ import shell from "shelljs";
 /**
  * If set, the value of this key will be used to determine sorting order of the underlying object.
  */
-let _key;
+let _key: string | undefined;
 
 // #endregion Variables
 
@@ -38,14 +38,14 @@ const JsonAlphabetize = {
     keyDescription() {
         return "Specify a key whose value should be used for alphabetization";
     },
-    run(files) {
+    run(files?: string[]) {
         if (CollectionUtils.isEmpty(files)) {
             echo.error("No file(s) specified.");
             shell.exit(0);
         }
         const timestamp = new Date().toISOString();
 
-        files.forEach((file) => {
+        files?.forEach((file) => {
             const parsedFile = jsonfile.readFileSync(file);
             const alphabetizedFile = Array.isArray(parsedFile)
                 ? _sortArray(parsedFile)
@@ -57,7 +57,7 @@ const JsonAlphabetize = {
             );
         });
     },
-    setKey(key) {
+    setKey(key?: string) {
         if (StringUtils.isEmpty(key)) {
             return this;
         }
@@ -73,12 +73,12 @@ const JsonAlphabetize = {
 // #region Private Functions
 // -----------------------------------------------------------------------------------------
 
-const _sortArray = (array) => {
+const _sortArray = (array: any[]): any[] => {
     if (!Array.isArray(array)) {
         return array;
     }
 
-    let sortedArray = [];
+    let sortedArray: any[] = [];
     const sortedStringsOrNumbers = array
         .filter(
             (entry) => typeof entry === "string" || typeof entry === "number"
@@ -112,10 +112,10 @@ const _sortArray = (array) => {
     return sortedArray;
 };
 
-const _sortObjectsByProperty = (objectA, objectB) =>
-    objectA[_key].localeCompare(objectB[_key]);
+const _sortObjectsByProperty = (objectA: any, objectB: any) =>
+    objectA[_key!].localeCompare(objectB[_key!]);
 
-const _sortObjectByKeys = (unsortedObject) => {
+const _sortObjectByKeys = (unsortedObject: any) => {
     if (typeof unsortedObject !== "object") {
         return unsortedObject;
     }
@@ -124,7 +124,7 @@ const _sortObjectByKeys = (unsortedObject) => {
         return _sortArray(unsortedObject);
     }
 
-    const sortedObject = {};
+    const sortedObject: any = {};
     Object.keys(unsortedObject)
         .sort()
         .forEach((key) => {

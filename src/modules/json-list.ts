@@ -21,7 +21,7 @@ const JsonList = {
     getOptions() {
         return optionStringFactory.build("list [dir]", "l");
     },
-    run(dir) {
+    run(dir?: string) {
         if (StringUtils.isEmpty(dir)) {
             dir = shell.pwd();
         }
@@ -29,7 +29,7 @@ const JsonList = {
         echo.message(`Listing json files in ${dir}`);
 
         const jsonFiles = shell
-            .ls("-R", dir)
+            .ls("-R", [dir!])
             .filter((file) => !file.includes(NODE_MODULES))
             .filter((file) => file.endsWith(".json"));
 

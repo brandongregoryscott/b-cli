@@ -12,6 +12,7 @@
     },
     "description": "Custom CLI for holding utility commands written with shelljs and commanderjs, extending the and-cli",
     "devDependencies": {
+        "@types/jsonfile": "6.0.0",
         "@types/shelljs": "0.8.8",
         "prettier": "1.19.1",
         "rimraf": "2.6.2",
