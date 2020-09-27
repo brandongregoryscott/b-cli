@@ -12,7 +12,8 @@
     },
     "description": "Custom CLI for holding utility commands written with shelljs and commanderjs, extending the and-cli",
     "devDependencies": {
-        "prettier": "1.19.1"
+        "prettier": "1.19.1",
+        "ts-migrate": "0.1.6"
     },
     "license": "Apache-2.0",
     "name": "b-cli",
