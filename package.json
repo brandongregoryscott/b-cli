@@ -8,7 +8,8 @@
         "andculturecode-javascript-core": "0.2.2",
         "commander": "6.0.0",
         "jsonfile": "6.0.1",
-        "shelljs": "0.8.4"
+        "shelljs": "0.8.4",
+        "upath": "1.2.0"
     },
     "description": "Custom CLI for holding utility commands written with shelljs and commanderjs, extending the and-cli",
     "devDependencies": {

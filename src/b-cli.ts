@@ -24,6 +24,10 @@ commandRegistry
         command: "json",
         description: "Commands to manipulate json files",
     })
+    .registerCommand({
+        command: "ts",
+        description: "Commands to manipulate ts files",
+    })
     .registerAliasesFromConfig()
     .parseWithAliases();
 

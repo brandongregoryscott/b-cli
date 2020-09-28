@@ -32,7 +32,7 @@ let _key: string | undefined;
 
 const JsonAlphabetize = {
     description() {
-        return "Alphabetizes a json file by a certain key";
+        return "Alphabetizes objects, keys and arrays in a json file";
     },
     getOptions() {
         return optionStringFactory.build("alphabetize [files]", "a");
