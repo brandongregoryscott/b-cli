@@ -74,6 +74,7 @@ const JsonAlphabetize = {
             echo.success(
                 `Finished alphabetizing '${inputFilename}', writing file to '${outputFilename}' ...`
             );
+            shell.touch(outputFilename);
             jsonfile.writeFileSync(outputFilename, alphabetizedFile, {
                 spaces: 4,
             });
@@ -103,19 +104,29 @@ const JsonAlphabetize = {
 // #region Private Functions
 // -----------------------------------------------------------------------------------------
 
+/**
+ * Sorts an array of any type of objects/primitives. Returns an array in sorted order of priority,
+ * recursively:
+ *
+ * 1. strings or numbers
+ * 2. objects
+ * 3. arrays
+ *
+ * @param array Array of any type to be sorted recursively.
+ */
 const _sortArray = (array: any[]): any[] => {
     if (!Array.isArray(array)) {
         return array;
     }
 
     let sortedArray: any[] = [];
-    const sortedStringsOrNumbers = array
+    const sortedPrimitives = array
         .filter(
             (entry) => typeof entry === "string" || typeof entry === "number"
         )
         .sort();
 
-    sortedArray = sortedArray.concat(sortedStringsOrNumbers);
+    sortedArray = sortedArray.concat(sortedPrimitives);
 
     const sortableObjects = array.filter(
         (entry) => typeof entry === "object" && !Array.isArray(entry)
@@ -128,10 +139,10 @@ const _sortArray = (array: any[]): any[] => {
 
     // If a key has been specified to sort the objects by, process it now.
     if (StringUtils.hasValue(_key)) {
-        sortedObjects = sortedObjects.sort(_sortObjectsByProperty);
+        sortedObjects = sortedObjects.sort(_sortObjectsByKey);
     }
 
-    sortedArray = sortedArray.concat(sortableObjects);
+    sortedArray = sortedArray.concat(sortedObjects);
 
     // Recursively sort any arrays
     const sortedNestedArrays = array
@@ -142,7 +153,7 @@ const _sortArray = (array: any[]): any[] => {
     return sortedArray;
 };
 
-const _sortObjectsByProperty = (objectA: any, objectB: any) =>
+const _sortObjectsByKey = (objectA: any, objectB: any) =>
     objectA[_key!].localeCompare(objectB[_key!]);
 
 const _sortObjectByKeys = (unsortedObject: any) => {
